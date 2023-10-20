@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 import time
 import chromedriver_autoinstaller
 from bs4 import BeautifulSoup
+from selenium.webdriver.support.wait import WebDriverWait
 
 chromedriver_autoinstaller.install()
 
@@ -18,6 +19,17 @@ driver.find_element(By.ID, "username").send_keys("regymatrix@gmail.com")
 driver.find_element(By.ID, "password").click()
 driver.find_element(By.ID, "password").send_keys("acesso1")
 driver.find_element(By.ID, "kc-login").click()
-time.sleep(10)
+
 html = driver.page_source
 soup = BeautifulSoup(html, 'html.parser')
+url2 = "https://web.dio.me/track/04e5f7bf-e6a2-49f5-8f53-8de2237cae18"
+driver.execute_script("window.open('" + url2 + "','_blank');")
+driver.switch_to.window(driver.window_handles[-1])
+time.sleep(5)
+html2 = driver.page_source
+bs = BeautifulSoup(html2,"html.parser")
+time.sleep(5)
+for span in bs.find_all("span"):
+    if (span.text.__contains__("Formação")):
+        print(span.text)
+
