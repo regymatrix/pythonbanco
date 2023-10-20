@@ -6,7 +6,7 @@ login_url = 'https://www.workana.com/pt/login'
 
 login_payload = {
     'email': 'reginaldosantanati@gmail.com',
-    'password': 'Cabrunco@123'
+    'password': ''
 }
 
 response = requests.get(login_url)

@@ -2,8 +2,13 @@ import requests
 
 url ="https://www.dio.me/sign-in"
 
-with requests.session() as session:
-    response = session.post(url, auth=("regymatrix@gmail.com","acesso1"))
-    print(response.text)
+r = requests.get(url)
+cookies = r.cookies
+st = r.status_code
 
-    
+for cok in cookies:
+    print(f"Nome do cookie: {cok.name}")
+    print(f"Valor do cookie: {cok.value}")
+
+
+
