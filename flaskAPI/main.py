@@ -3,6 +3,38 @@ import json
 
 app = Flask(__name__)
 
+desenvolvedores = [{'nome' : 'Reginaldo',
+                    'habilidades': ['Python','Flask']
+                    },
+                    {'nome': 'Eliza',
+                    'habilidades': ['C#', 'Swegger']
+                    }]
+@app.route("/devall")
+def desenvolvedorall():
+    return jsonify(desenvolvedores)
+
+@app.route('/dev/<int:id>', methods=['GET','PUT','DELETE'])
+def desenvolvedor(id):
+    if request.method=='GET':
+        try:
+            response =desenvolvedores[id]
+        except IndexError:
+            mensagem ='Dev não existe com esse ID'.format(id)
+            response = {'status': 'erro', 'mensagem': mensagem}
+        except Exception:
+            mensagem = 'Erro desconhecido'
+            response = {'status': 'erro', 'mensagem': mensagem}
+        return jsonify(response)
+
+    elif request.method=='PUT':
+        dados = json.loads(request.data)
+        desenvolvedores.append(dados)
+        return jsonify(dados)
+    elif request.method=='DELETE':
+        desenvolvedores.pop(id)
+        return jsonify({'status': 'Sucesso','mensagem': 'Registro excluído'})
+
+
 @app.route("/")
 def home():
     return 'Página inicial [Teste]'
